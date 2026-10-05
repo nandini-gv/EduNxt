@@ -5,7 +5,6 @@ import { HeroTitle } from '@/components/HeroTitle'
 import { Button } from '@/components/Button'
 import { AnimatedCounter } from '@/components/AnimatedCounter'
 import { VideoModal } from '@/components/VideoModal'
-import { HeroMarketplacePanel } from '@/components/HeroMarketplacePanel'
 import { heroStatsV2 } from '@/data/site'
 import { ease } from '@/lib/utils'
 import heroOrbit from '@/assets/img/hero-orbit.jpg'
@@ -34,7 +33,7 @@ export function Hero() {
 
   const fadeUp = (d: number) =>
     ({
-      initial: reduce ? false : { opacity: 0, y: 24 },
+      initial: reduce ? false : { opacity: 0, y: 28 },
       animate: { opacity: 1, y: 0 },
       transition: { duration: 0.9, delay: d, ease: [0.22, 1, 0.36, 1] },
     } as const)
@@ -52,7 +51,7 @@ export function Hero() {
       onMouseLeave={() => setHold(false)}
       onFocus={() => setHold(true)}
       onBlur={() => setHold(false)}
-      className="relative isolate min-h-[90svh] overflow-hidden bg-[#050A14] pt-4 text-white sm:min-h-[94svh] lg:pt-6"
+      className="relative isolate min-h-[88svh] overflow-hidden bg-[#030712] pt-4 text-white sm:min-h-[92svh] lg:pt-8"
     >
       {/* Cinematic backdrop: Planet imagery with Ken Burns scale & subtle drifting atmosphere */}
       <motion.div style={{ y, opacity: fade }} className="absolute inset-0 -z-20" aria-hidden="true">
@@ -63,7 +62,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease }}
+            transition={{ duration: 1.6, ease }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={0.12}
@@ -72,10 +71,11 @@ export function Hero() {
               else if (info.offset.x > 60) go(i - 1)
             }}
           >
+            {/* Same height across slider images */}
             <motion.img
               src={slides[i]}
               alt=""
-              className="h-full w-full object-cover opacity-60"
+              className="h-full w-full object-cover opacity-65"
               initial={reduce ? false : { scale: 1.05 }}
               animate={{ scale: 1.15 }}
               transition={{ duration: AUTOPLAY / 1000 + 1.5, ease: 'linear' }}
@@ -84,84 +84,77 @@ export function Hero() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Atmospheric layered gradients and glows */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#050A14] via-[#050A14]/40 to-[#050A14]/75" />
-      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-[#050A14] to-transparent" />
-      <div aria-hidden="true" className="absolute -left-20 top-1/4 -z-10 h-[500px] w-[500px] rounded-full bg-electric/20 blur-[130px]" />
-      <div aria-hidden="true" className="absolute -right-20 bottom-10 -z-10 h-[450px] w-[450px] rounded-full bg-cyan-600/15 blur-[120px]" />
+      {/* Layered cinematic gradients and glows */}
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#030712] via-[#030712]/30 to-[#030712]/70" />
+      <div aria-hidden="true" className="absolute inset-x-0 top-0 -z-10 h-56 bg-gradient-to-b from-[#030712] via-[#030712]/60 to-transparent" />
+      <div aria-hidden="true" className="absolute -left-20 top-1/4 -z-10 h-[550px] w-[550px] rounded-full bg-electric/20 blur-[140px]" />
+      <div aria-hidden="true" className="absolute right-1/4 bottom-10 -z-10 h-[450px] w-[450px] rounded-full bg-cyan-600/15 blur-[130px]" />
 
-      {/* Main Hero Grid */}
-      <div className="mx-auto flex min-h-[calc(90svh-56px)] max-w-[1560px] flex-col justify-center px-4 py-8 sm:min-h-[calc(94svh-62px)] sm:px-8 sm:py-12 lg:px-12">
-        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Storytelling Copy & Stats */}
-          <div className="lg:col-span-7 xl:col-span-7">
-            {/* 1. Eyebrow badge */}
-            <motion.div {...fadeUp(0.1)} className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-electric-300 backdrop-blur-md">
-              <Sparkles className="h-3.5 w-3.5 text-electric-300" />
-              <span>A BRIGHTER TOMORROW</span>
-            </motion.div>
+      {/* Main Hero Content */}
+      <div className="mx-auto flex min-h-[calc(88svh-56px)] max-w-[1560px] flex-col justify-center px-4 py-12 sm:min-h-[calc(92svh-62px)] sm:px-8 sm:py-16 lg:px-12">
+        <div className="max-w-4xl">
+          {/* 1. Eyebrow badge */}
+          <motion.div {...fadeUp(0.1)} className="inline-flex items-center gap-2 rounded-full border border-electric/30 bg-electric/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-electric-300 backdrop-blur-md">
+            <Sparkles className="h-3.5 w-3.5 text-electric-300" />
+            <span>A BRIGHTER TOMORROW</span>
+          </motion.div>
 
-            {/* 2 & 3. Headline reveal */}
-            <div className="mt-4">
-              <HeroTitle
-                lines={['Skills Create', "What's Next."]}
-                accent="What's Next."
-                className="font-display font-extrabold text-white text-[2.6rem] leading-[1.02] tracking-tight sm:text-[3.8rem] lg:text-[4.6rem]"
-              />
-            </div>
+          {/* 2 & 3. Headline reveal */}
+          <div className="mt-5">
+            <HeroTitle
+              lines={['Skills Create', "What's Next."]}
+              accent="What's Next."
+              className="font-display font-extrabold text-white text-[2.8rem] leading-[1.02] tracking-tight sm:text-[4.2rem] lg:text-[5.4rem]"
+            />
+          </div>
 
-            {/* 4. Supporting text */}
-            <motion.p {...fadeUp(0.35)} className="mt-4 text-xl font-bold tracking-tight text-white/95 sm:text-2xl lg:text-[1.75rem]">
-              Jobs. Opportunities. People. Progress.
-            </motion.p>
-            <motion.p {...fadeUp(0.45)} className="mt-3 max-w-[34rem] text-[1.0625rem] leading-relaxed text-white/75 sm:text-lg">
-              A unified platform for job seekers, recruiters, freelancers and learners — built for a brighter tomorrow.
-            </motion.p>
+          {/* 4. Supporting text */}
+          <motion.p {...fadeUp(0.35)} className="mt-5 text-xl font-bold tracking-tight text-white/95 sm:text-2xl lg:text-[2rem]">
+            Jobs. Opportunities. People. Progress.
+          </motion.p>
+          <motion.p {...fadeUp(0.45)} className="mt-4 max-w-[38rem] text-[1.1rem] leading-relaxed text-white/80 sm:text-xl">
+            A unified platform for job seekers, recruiters, freelancers and learners — built for a brighter tomorrow.
+          </motion.p>
 
-            {/* 5. Buttons */}
-            <motion.div {...fadeUp(0.55)} className="mt-8 flex flex-wrap gap-3.5">
-              <Button to="/marketplace" size="lg" arrow magnetic className="bg-electric hover:bg-electric-400 shadow-glow">
-                Explore Opportunities
-              </Button>
-              <Button
-                variant="glass"
-                size="lg"
-                onClick={() => setVideo(true)}
-                icon={
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-white text-ink">
-                    <Play className="ml-px h-3 w-3 fill-current" aria-hidden="true" />
-                  </span>
-                }
+          {/* 5. Buttons */}
+          <motion.div {...fadeUp(0.55)} className="mt-9 flex flex-wrap gap-4">
+            <Button to="/marketplace" size="lg" arrow magnetic className="bg-electric hover:bg-electric-400 shadow-glow text-base px-7 py-3.5">
+              Explore Opportunities
+            </Button>
+            <Button
+              variant="glass"
+              size="lg"
+              onClick={() => setVideo(true)}
+              className="text-base px-7 py-3.5"
+              icon={
+                <span className="grid h-6 w-6 place-items-center rounded-full bg-white text-ink">
+                  <Play className="ml-px h-3 w-3 fill-current" aria-hidden="true" />
+                </span>
+              }
+            >
+              Watch Video
+            </Button>
+          </motion.div>
+
+          {/* 6. Stats reveal sequentially */}
+          <motion.dl {...fadeUp(0.7)} className="mt-14 grid max-w-[42rem] grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-4 sm:gap-y-0 border-t border-white/10 pt-8">
+            {heroStatsV2.map((s, k) => (
+              <motion.div
+                key={s.label}
+                initial={reduce ? false : { opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.7 + k * 0.1, ease }}
+                className={k % 2 === 1 ? 'border-l border-white/15 pl-5 sm:border-l' : k > 0 ? 'sm:border-l sm:border-white/15 sm:pl-5' : ''}
               >
-                Watch Video
-              </Button>
-            </motion.div>
-
-            {/* 6. Stats reveal sequentially */}
-            <motion.dl {...fadeUp(0.7)} className="mt-12 grid max-w-[36rem] grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-4 sm:gap-y-0">
-              {heroStatsV2.map((s, k) => (
-                <motion.div
-                  key={s.label}
-                  initial={reduce ? false : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.7 + k * 0.1, ease }}
-                  className={k % 2 === 1 ? 'border-l border-white/15 pl-4 sm:border-l' : k > 0 ? 'sm:border-l sm:border-white/15 sm:pl-4' : ''}
-                >
-                  <dd className="font-display text-[1.95rem] font-extrabold leading-none tracking-tight text-white sm:text-[2.2rem]">
-                    <AnimatedCounter value={s.value} suffix={s.suffix} />
-                  </dd>
-                  <dt className="mt-2 text-[12.5px] font-medium leading-tight text-white/65 sm:text-[13px]">
-                    {s.label}
-                  </dt>
-                </motion.div>
-              ))}
-            </motion.dl>
-          </div>
-
-          {/* Right Column: Floating Marketplace Panel (Adobe-style inspiration) */}
-          <div className="lg:col-span-5 xl:col-span-5">
-            <HeroMarketplacePanel />
-          </div>
+                <dd className="font-display text-[2rem] font-extrabold leading-none tracking-tight text-white sm:text-[2.4rem]">
+                  <AnimatedCounter value={s.value} suffix={s.suffix} />
+                </dd>
+                <dt className="mt-2 text-[13px] font-medium leading-tight text-white/70 sm:text-[13.5px]">
+                  {s.label}
+                </dt>
+              </motion.div>
+            ))}
+          </motion.dl>
         </div>
       </div>
 
@@ -210,10 +203,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Smooth transition wave into light sections */}
-      <svg aria-hidden="true" viewBox="0 0 1440 90" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-0 h-10 w-full text-white sm:h-14">
-        <path d="M0 60C240 10 420 90 720 52C1020 14 1200 80 1440 30V90H0Z" fill="currentColor" />
-      </svg>
       <VideoModal open={video} onClose={() => setVideo(false)} />
     </section>
   )

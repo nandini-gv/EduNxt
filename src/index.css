@@ -6,10 +6,10 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   box-sizing: border-box;
-  --ink: #071A3A;
-  --blue: #1769FF;
+  --ink: #FFFFFF;
+  --blue: #1677FF;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -19,36 +19,36 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-stopped { overflow: hidden; }
 
 body {
-  background: #fff;
-  color: #26364A;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  background: #030712;
+  color: #EAF2FF;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
-::selection { background: #1769FF; color: #fff; }
+::selection { background: #1677FF; color: #fff; }
 
 @layer base {
-  h1, h2, h3, h4 { font-family: Manrope, Inter, system-ui, sans-serif; color: #071A3A; }
-  :focus-visible { outline: 2px solid #1769FF; outline-offset: 3px; border-radius: 8px; }
+  h1, h2, h3, h4 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", Manrope, sans-serif; color: #FFFFFF; }
+  :focus-visible { outline: 2px solid #1677FF; outline-offset: 3px; border-radius: 8px; }
 }
 
 @layer components {
   .container-x { @apply mx-auto w-full max-w-[1560px] px-4 sm:px-8 lg:px-12; }
   .section-y { @apply py-16 sm:py-24 lg:py-28; }
-  .display-xl { @apply font-display font-extrabold text-ink; letter-spacing: -0.045em; line-height: 0.98; font-size: clamp(2.6rem, 11.6vw, 3.6rem); }
+  .display-xl { @apply font-display font-extrabold text-white; letter-spacing: -0.045em; line-height: 0.98; font-size: clamp(2.6rem, 11.6vw, 3.6rem); }
   @media (min-width: 640px) { .display-xl { font-size: clamp(3.6rem, 8.2vw, 6rem); } }
-  .display-lg { @apply font-display font-extrabold text-ink; letter-spacing: -0.04em; line-height: 1.02; font-size: clamp(2.1rem, 5.6vw, 4rem); }
-  .display-md { @apply font-display font-bold text-ink; letter-spacing: -0.03em; line-height: 1.08; font-size: clamp(1.7rem, 3.6vw, 2.75rem); }
-  .lead { @apply text-[1.0625rem] sm:text-lg leading-relaxed text-ink-700/90; }
-  .grad-text { background: linear-gradient(100deg, #1769FF 10%, #5AA7FF 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .glass { background: rgba(255,255,255,.62); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid rgba(255,255,255,.7); }
-  .card { @apply rounded-3xl border border-hair bg-white shadow-soft; }
+  .display-lg { @apply font-display font-extrabold text-white; letter-spacing: -0.04em; line-height: 1.02; font-size: clamp(2.1rem, 5.6vw, 4rem); }
+  .display-md { @apply font-display font-bold text-white; letter-spacing: -0.03em; line-height: 1.08; font-size: clamp(1.7rem, 3.6vw, 2.75rem); }
+  .lead { @apply text-[1.0625rem] sm:text-lg leading-relaxed text-white/80; }
+  .grad-text { background: linear-gradient(100deg, #1677FF 10%, #5AA7FF 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .glass { background: rgba(3, 7, 18, 0.45); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid rgba(255,255,255,0.14); }
+  .card { @apply rounded-3xl border border-white/10 bg-[#071426]/70 shadow-2xl backdrop-blur-md; }
   .link-u { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .45s cubic-bezier(.22,1,.36,1); }
   .link-u:hover { background-size: 100% 1.5px; }
   .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
-  .field { @apply w-full rounded-xl border border-hair bg-white px-4 py-3.5 text-[15px] text-ink outline-none transition placeholder:text-ink-700/40 focus:border-electric focus:ring-4 focus:ring-electric/10; }
+  .field { @apply w-full rounded-xl border border-white/15 bg-white/10 px-4 py-3.5 text-[15px] text-white outline-none transition placeholder:text-white/40 focus:border-electric focus:ring-4 focus:ring-electric/20; }
 }
 
 /* Page-load hero line reveal */
@@ -59,5 +59,5 @@ body {
 }
 
 @layer components {
-  .display-hero-sm { @apply font-display font-extrabold text-ink; letter-spacing: -0.042em; line-height: 1; font-size: clamp(2.4rem, 6.6vw, 4.6rem); }
+  .display-hero-sm { @apply font-display font-extrabold text-white; letter-spacing: -0.042em; line-height: 1; font-size: clamp(2.4rem, 6.6vw, 4.6rem); }
 }

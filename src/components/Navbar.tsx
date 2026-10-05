@@ -1,13 +1,14 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
-import { Search, User } from 'lucide-react'
+import { Search, User, ChevronDown } from 'lucide-react'
 import { nav } from '@/data/site'
 import { Logo } from './Logo'
 import { Button } from './Button'
 import { MobileMenu } from './MobileMenu'
 import { SearchOverlay } from './SearchOverlay'
 import { AnchorLink } from './AnchorLink'
+import { MarketplacePopover } from './MarketplacePopover'
 import { useScrolled } from '@/hooks/useScrolled'
 import { cn, ease } from '@/lib/utils'
 
@@ -16,6 +17,7 @@ export function Navbar() {
   const [menu, setMenu] = useState(false)
   const [search, setSearch] = useState(false)
   const [profile, setProfile] = useState(false)
+  const [marketplaceOpen, setMarketplaceOpen] = useState(false)
   const [q, setQ] = useState('')
   const { pathname } = useLocation()
   const go = useNavigate()
@@ -23,7 +25,11 @@ export function Navbar() {
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.3 })
 
-  useEffect(() => setMenu(false), [pathname])
+  useEffect(() => {
+    setMenu(false)
+    setMarketplaceOpen(false)
+  }, [pathname])
+
   useEffect(() => {
     if (!profile) return
     const t = setTimeout(() => setProfile(false), 3200)
@@ -35,9 +41,6 @@ export function Navbar() {
     go(q.trim() ? `/marketplace?q=${encodeURIComponent(q.trim())}` : '/marketplace')
     setQ('')
   }
-  const isHomePage = pathname === '/'
-  const dark = isHomePage && !scrolled
-  const glass = scrolled && !menu
 
   return (
     <>
@@ -45,15 +48,13 @@ export function Navbar() {
         <div
           className={cn(
             'relative mx-auto max-w-[1560px] rounded-full border transition-all duration-500 ease-apple',
-            glass
-              ? 'border-white/20 bg-[#071426]/90 shadow-[0_16px_40px_-15px_rgba(5,10,20,0.5)] backdrop-blur-2xl'
-              : dark
-                ? 'border-white/15 bg-[#050A14]/70 shadow-2xl backdrop-blur-xl'
-                : 'border-hair bg-white/80 shadow-[0_10px_30px_-15px_rgba(7,26,58,0.15)] backdrop-blur-xl',
+            scrolled
+              ? 'border-white/20 bg-[rgba(3,7,18,0.85)] shadow-[0_16px_40px_-15px_rgba(0,0,0,0.7)] backdrop-blur-2xl'
+              : 'border-white/15 bg-[rgba(3,7,18,0.35)] shadow-2xl backdrop-blur-[20px]',
           )}
         >
           <div className="flex h-[56px] items-center justify-between px-4 sm:px-6 lg:h-[62px] lg:px-7">
-            <Logo dark={dark || glass} />
+            <Logo dark={true} />
 
             <nav aria-label="Primary" className="hidden lg:block">
               <ul className="flex items-center gap-1 xl:gap-2">
@@ -62,10 +63,7 @@ export function Navbar() {
                     {n.kind === 'anchor' ? (
                       <AnchorLink
                         id={n.to}
-                        className={cn(
-                          'relative block rounded-full px-3 py-1.5 text-[13.5px] font-medium tracking-tight transition-colors duration-300 xl:px-4',
-                          dark || glass ? 'text-white/80 hover:text-white' : 'text-ink-700 hover:text-ink',
-                        )}
+                        className="relative block rounded-full px-3 py-1.5 text-[13.5px] font-medium tracking-tight text-white/80 transition-colors duration-300 hover:text-white xl:px-4"
                       >
                         {n.label}
                       </AnchorLink>
@@ -74,17 +72,13 @@ export function Navbar() {
                         to={n.to}
                         className={cn(
                           'relative block rounded-full px-3 py-1.5 text-[13.5px] font-medium tracking-tight transition-colors duration-300 xl:px-4',
-                          pathname === n.to
-                            ? 'text-electric-300 font-semibold'
-                            : dark || glass
-                              ? 'text-white/80 hover:text-white'
-                              : 'text-ink-700 hover:text-ink',
+                          pathname === n.to ? 'text-electric-300 font-semibold' : 'text-white/80 hover:text-white',
                         )}
                       >
                         {pathname === n.to && (
                           <motion.span
                             layoutId="nav-pill"
-                            className="absolute inset-0 -z-10 rounded-full bg-electric/20"
+                            className="absolute inset-0 -z-10 rounded-full bg-electric/25"
                             transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                           />
                         )}
@@ -99,18 +93,13 @@ export function Navbar() {
             <div className="flex items-center gap-2 sm:gap-3">
               <form onSubmit={submit} role="search" className="relative hidden xl:block">
                 <label htmlFor="nav-q" className="sr-only">Search companies, jobs, skills or keywords</label>
-                <Search className={cn('pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2', dark || glass ? 'text-white/50' : 'text-ink-700/55')} aria-hidden="true" />
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" aria-hidden="true" />
                 <input
                   id="nav-q"
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
                   placeholder="Search jobs, skills or keywords..."
-                  className={cn(
-                    'h-9 w-[240px] rounded-full border pl-10 pr-10 text-[13px] outline-none transition focus:ring-4',
-                    dark || glass
-                      ? 'border-white/20 bg-white/10 text-white placeholder:text-white/45 focus:border-electric-300 focus:bg-white/15 focus:ring-electric/20'
-                      : 'border-hair bg-white/80 text-ink placeholder:text-ink-700/45 focus:border-electric focus:bg-white focus:ring-electric/10',
-                  )}
+                  className="h-9 w-[230px] rounded-full border border-white/20 bg-white/10 pl-10 pr-10 text-[13px] text-white outline-none transition placeholder:text-white/45 focus:border-electric-300 focus:bg-white/15 focus:ring-4 focus:ring-electric/20"
                 />
                 <button
                   type="submit"
@@ -124,23 +113,39 @@ export function Navbar() {
               <button
                 onClick={() => setSearch(true)}
                 aria-label="Search"
-                className={cn('grid h-9 w-9 place-items-center rounded-full transition xl:hidden', dark || glass ? 'text-white hover:bg-white/10' : 'text-ink hover:bg-ink/5')}
+                className="grid h-9 w-9 place-items-center rounded-full text-white transition hover:bg-white/10 xl:hidden"
               >
                 <Search className="h-[18px] w-[18px]" />
               </button>
 
-              <Button to="/marketplace" size="sm" magnetic>Marketplace</Button>
+              {/* Floating Marketplace Button with Adobe App Launcher Popover */}
+              <div className="relative">
+                <button
+                  onClick={() => setMarketplaceOpen((p) => !p)}
+                  aria-expanded={marketplaceOpen}
+                  aria-haspopup="true"
+                  className={cn(
+                    'inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13.5px] font-semibold text-white transition duration-300',
+                    marketplaceOpen
+                      ? 'bg-electric text-white shadow-glow'
+                      : 'bg-white/15 text-white hover:bg-white/25 border border-white/20'
+                  )}
+                >
+                  <span>Marketplace</span>
+                  <ChevronDown className={cn('h-3.5 w-3.5 transition-transform duration-300', marketplaceOpen ? 'rotate-180' : '')} />
+                </button>
 
+                <MarketplacePopover open={marketplaceOpen} onClose={() => setMarketplaceOpen(false)} />
+              </div>
+
+              {/* Profile button */}
               <div className="relative hidden lg:block">
                 <button
                   onClick={() => setProfile((p) => !p)}
                   aria-haspopup="true"
                   aria-expanded={profile}
                   aria-label="Profile and login"
-                  className={cn(
-                    'grid h-9 w-9 place-items-center rounded-full transition duration-300 hover:scale-105 hover:shadow-glow',
-                    dark || glass ? 'bg-white/15 text-white hover:bg-electric' : 'bg-ink text-white hover:bg-electric',
-                  )}
+                  className="grid h-9 w-9 place-items-center rounded-full bg-white/15 text-white transition duration-300 hover:scale-105 hover:bg-electric hover:shadow-glow"
                 >
                   <User className="h-[17px] w-[17px]" />
                 </button>
@@ -152,10 +157,10 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -6 }}
                       transition={{ duration: 0.3, ease }}
-                      className="absolute right-0 top-[calc(100%+10px)] w-56 rounded-2xl border border-hair bg-white p-4 text-left shadow-lift"
+                      className="absolute right-0 top-[calc(100%+10px)] w-56 rounded-2xl border border-white/15 bg-[#071426] p-4 text-left shadow-2xl text-white backdrop-blur-xl"
                     >
-                      <p className="text-[13.5px] font-semibold text-ink">Profile & login</p>
-                      <p className="mt-1 text-[12.5px] leading-snug text-ink-700/75">Coming soon in this demo. Explore the Marketplace to see companies and roles.</p>
+                      <p className="text-[13.5px] font-semibold text-white">Profile & login</p>
+                      <p className="mt-1 text-[12.5px] leading-snug text-white/70">Coming soon in this demo. Explore the Marketplace to see companies and roles.</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -166,17 +171,17 @@ export function Navbar() {
                 aria-expanded={menu}
                 aria-controls="mobile-menu"
                 aria-label={menu ? 'Close menu' : 'Open menu'}
-                className="relative grid h-9 w-9 place-items-center rounded-full transition active:scale-95 lg:hidden"
+                className="relative grid h-9 w-9 place-items-center rounded-full transition active:scale-95 lg:hidden text-white"
               >
-                <motion.span className={cn('absolute h-[2px] w-[18px] rounded-full', menu ? 'bg-ink' : dark || glass ? 'bg-white' : 'bg-ink')} animate={menu ? { rotate: 45, y: 0 } : { rotate: 0, y: -3.5 }} transition={{ duration: 0.4, ease }} />
-                <motion.span className={cn('absolute h-[2px] w-[18px] rounded-full', menu ? 'bg-ink' : dark || glass ? 'bg-white' : 'bg-ink')} animate={menu ? { rotate: -45, y: 0 } : { rotate: 0, y: 3.5 }} transition={{ duration: 0.4, ease }} />
+                <motion.span className="absolute h-[2px] w-[18px] rounded-full bg-white" animate={menu ? { rotate: 45, y: 0 } : { rotate: 0, y: -3.5 }} transition={{ duration: 0.4, ease }} />
+                <motion.span className="absolute h-[2px] w-[18px] rounded-full bg-white" animate={menu ? { rotate: -45, y: 0 } : { rotate: 0, y: 3.5 }} transition={{ duration: 0.4, ease }} />
               </button>
             </div>
           </div>
           <motion.div
             aria-hidden="true"
             style={{ scaleX: progress }}
-            className={cn('absolute inset-x-5 bottom-0 h-[2px] origin-left rounded-full bg-electric transition-opacity duration-300', glass ? 'opacity-100' : 'opacity-0')}
+            className={cn('absolute inset-x-5 bottom-0 h-[2px] origin-left rounded-full bg-electric transition-opacity duration-300', scrolled ? 'opacity-100' : 'opacity-0')}
           />
         </div>
       </header>
