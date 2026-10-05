@@ -15,7 +15,7 @@ const items = [
 export function Connect() {
   const [open, setOpen] = useState(false)
   return (
-    <section id="connect" className="relative overflow-hidden bg-gradient-to-b from-white via-[#F1F6FF] to-[#E6F0FF] pb-20 pt-12 sm:pt-16" aria-labelledby="connect-h">
+    <section id="connect" className="relative overflow-hidden bg-gradient-to-b from-[#F4F8FF] via-[#E6F0FF] to-[#EDF4FF] pb-20 pt-16 text-ink" aria-labelledby="connect-h">
       {/* Soft atmospheric gradient glow */}
       <div aria-hidden="true" className="pointer-events-none absolute -right-20 top-0 h-96 w-96 rounded-full bg-electric/10 blur-[120px]" />
 
@@ -23,30 +23,30 @@ export function Connect() {
         <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-6 xl:col-span-5">
             <Reveal>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-electric/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-electric">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-electric/10 px-3.5 py-1 text-[11px] font-bold uppercase tracking-widest text-electric">
                 <Sparkles className="h-3 w-3" /> GET IN TOUCH
               </span>
             </Reveal>
-            <Reveal as="h2" delay={0.06} className="display-md mt-3 !text-[2.2rem] sm:!text-[3rem]">
+            <Reveal as="h2" delay={0.06} className="display-md mt-4 !text-[2.1rem] sm:!text-[2.65rem] !text-[#071A3A] font-semibold">
               <span id="connect-h">Connect With Us</span>
             </Reveal>
-            <Reveal delay={0.12} className="mt-3 max-w-md text-[16px] leading-relaxed text-ink-700/85 sm:text-[17px]">
+            <Reveal delay={0.12} className="mt-3 max-w-md text-[16.5px] leading-relaxed text-ink-700/85 sm:text-[17.5px]">
               Have questions or want to partner with us?<br />We’d love to hear from you.
             </Reveal>
             <Reveal delay={0.18} className="mt-6">
-              <Button size="lg" arrow magnetic onClick={() => setOpen(true)} className="bg-electric hover:bg-electric-400 shadow-glow">
+              <Button size="lg" arrow magnetic onClick={() => setOpen(true)} className="bg-electric hover:bg-electric-400 shadow-glow text-base px-7 py-3.5">
                 Let’s Talk
               </Button>
             </Reveal>
             <Reveal delay={0.24}>
               <ul className="mt-10 grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
                 {items.map((it) => (
-                  <li key={it.label} className="flex items-center gap-3.5 rounded-2xl border border-white/60 bg-white/70 p-3.5 shadow-soft backdrop-blur-md">
+                  <li key={it.label} className="flex items-center gap-3.5 rounded-2xl border border-white/80 bg-white/90 p-4 shadow-soft backdrop-blur-md">
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-electric/10 text-electric shadow-sm">
                       <it.icon className="h-5 w-5" aria-hidden="true" />
                     </span>
                     <span className="min-w-0 leading-tight">
-                      <span className="block text-[13px] font-bold text-ink">{it.label}</span>
+                      <span className="block text-[13px] font-bold text-[#071A3A]">{it.label}</span>
                       <span className="block truncate text-[13px] text-ink-700/80">{it.v}</span>
                     </span>
                   </li>

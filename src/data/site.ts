@@ -42,7 +42,10 @@ export const services: Service[] = [
   { id: 'svc-training', title: 'Technology Training', desc: 'Learn in-demand skills for real-world growth.', cta: 'Explore Training', icon: GraduationCap, image: svcTraining },
 ]
 
-export const partners = ['Microsoft', 'Google', 'Amazon', 'IBM', 'TCS', 'Infosys', 'Accenture', 'Capgemini']
+export const partners = [
+  'Microsoft', 'Google', 'Amazon', 'IBM', 'TCS', 'Infosys', 'Accenture', 'Capgemini',
+  'Oracle', 'Meta', 'Apple', 'Salesforce', 'Intel', 'Cisco', 'Wipro', 'HCLTech'
+]
 
 export type Testimonial = { quote: string; name: string; role: string; rating: number; person: number }
 export const testimonials: Testimonial[] = [

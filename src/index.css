@@ -36,14 +36,13 @@ body {
 @layer components {
   .container-x { @apply mx-auto w-full max-w-[1560px] px-4 sm:px-8 lg:px-12; }
   .section-y { @apply py-16 sm:py-24 lg:py-28; }
-  .display-xl { @apply font-display font-extrabold text-white; letter-spacing: -0.045em; line-height: 0.98; font-size: clamp(2.6rem, 11.6vw, 3.6rem); }
-  @media (min-width: 640px) { .display-xl { font-size: clamp(3.6rem, 8.2vw, 6rem); } }
-  .display-lg { @apply font-display font-extrabold text-white; letter-spacing: -0.04em; line-height: 1.02; font-size: clamp(2.1rem, 5.6vw, 4rem); }
-  .display-md { @apply font-display font-bold text-white; letter-spacing: -0.03em; line-height: 1.08; font-size: clamp(1.7rem, 3.6vw, 2.75rem); }
+  .display-xl { @apply font-display font-extrabold text-white; letter-spacing: -0.035em; line-height: 1.02; font-size: clamp(2.4rem, 5.5vw, 4.4rem); }
+  .display-lg { @apply font-display font-extrabold text-white; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(2.0rem, 4.2vw, 3.2rem); }
+  .display-md { @apply font-display font-semibold text-white; letter-spacing: -0.025em; line-height: 1.08; font-size: clamp(1.8rem, 3.2vw, 2.75rem); }
   .lead { @apply text-[1.0625rem] sm:text-lg leading-relaxed text-white/80; }
   .grad-text { background: linear-gradient(100deg, #1677FF 10%, #5AA7FF 90%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .glass { background: rgba(3, 7, 18, 0.45); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid rgba(255,255,255,0.14); }
-  .card { @apply rounded-3xl border border-white/10 bg-[#071426]/70 shadow-2xl backdrop-blur-md; }
+  .glass { background: rgba(7, 20, 38, 0.55); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid rgba(150, 180, 220, 0.2); }
+  .card { @apply rounded-3xl border border-white/15 bg-[#071426]/75 shadow-2xl backdrop-blur-md; }
   .link-u { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1.5px no-repeat; transition: background-size .45s cubic-bezier(.22,1,.36,1); }
   .link-u:hover { background-size: 100% 1.5px; }
   .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
@@ -59,5 +58,5 @@ body {
 }
 
 @layer components {
-  .display-hero-sm { @apply font-display font-extrabold text-white; letter-spacing: -0.042em; line-height: 1; font-size: clamp(2.4rem, 6.6vw, 4.6rem); }
+  .display-hero-sm { @apply font-display font-extrabold text-white; letter-spacing: -0.038em; line-height: 1.02; font-size: clamp(2.4rem, 5.8vw, 4.4rem); }
 }
